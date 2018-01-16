@@ -23,12 +23,12 @@ export default class HomeScreen extends Component<{}> {
 
     return (
       <View style={{ flex: 1, flexDirection: 'column', alignItems: 'stretch' }}>
-        <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', padding: 8, backgroundColor: 'silver' }}>
+        <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', padding: 8, borderBottomWidth: 3, borderBottomColor: '#5AA8BF' }}>
           <Image source={require('../Profile/me.jpg')}
-            style={{ height: '100%', width: '30%', marginRight: 16}}/>
+            style={{ height: '100%', width: '30%', marginRight: 16, borderRadius: 10 }}/>
           <View style={{ flex: 1, flexDirection: 'column' }}>
-            <Text style={{ fontSize: 32 }}>Josh Carrier</Text>
-            <Text style={{ fontSize: 12 }}>SENIOR SOFTWARE ENGINEER</Text>
+            <Text style={{ fontSize: 40 }}>Josh Carrier</Text>
+            <Text style={{ fontSize: 12 }}>NOT REALLY A MOBILE DEVELOPER</Text>
           </View>
         </View>
         <View style={{ flex: 10 }}>
