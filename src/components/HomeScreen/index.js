@@ -18,14 +18,14 @@ export default class HomeScreen extends Component<{}> {
       {
         'route': 'Calculator',
         'screenshot': require('../Calculator/screenshot.png')
-      },
-    ]
-
+      }
+    ];
+    
     return (
       <View style={{ flex: 1, flexDirection: 'column', alignItems: 'stretch' }}>
-        <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', padding: 8, borderBottomWidth: 3, borderBottomColor: '#5AA8BF' }}>
+        <View style={{ flex: 2, flexDirection: 'row', alignItems: 'center', padding: 16, paddingTop: 24, paddingBottom: 24 }}>
           <Image source={require('../Profile/me.jpg')}
-            style={{ height: '100%', width: '30%', marginRight: 16, borderRadius: 10 }}/>
+            style={{ height: '100%', width: '30%', marginRight: 16, borderRadius: 55 }}/>
           <View style={{ flex: 1, flexDirection: 'column' }}>
             <Text style={{ fontSize: 40 }}>Josh Carrier</Text>
             <Text style={{ fontSize: 12 }}>NOT REALLY A MOBILE DEVELOPER</Text>
@@ -33,17 +33,17 @@ export default class HomeScreen extends Component<{}> {
         </View>
         <View style={{ flex: 10 }}>
           <ScrollView>
-            <View  style={{ flex: 1, flexDirection: 'row', alignItems: 'stretch', justifyContent: 'space-between', flexWrap: 'wrap', padding: 8 }}>
+            <View  style={{ flex: 1, flexDirection: 'row', alignItems: 'stretch', justifyContent: 'flex-start', flexWrap: 'wrap' }}>
               
               {projects.map((p, i) => {
                 return (
                   <TouchableOpacity key={i}
                     activeOpacity={0.8}
-                    style={{width: '49%', height: 160, padding: 6, marginBottom: 8, borderColor: 'gray', borderWidth: 1}}
+                    style={{width: '47%', height: 160, borderColor: 'gray', borderWidth:0.3, margin: 4 }}
                     onPress={() => navigate(p.route) }>
-                    <View style={{ flex: 1, flexDirection: 'column', alignItems: 'stretch', justifyContent: 'center'}}>
+                    <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 8 }}>
                       <Image source={p.screenshot}
-                        style={{ height: '80%', width: '100%', marginBottom: 4}}/>
+                        style={{ height: '80%', width: '90%', marginBottom: 4}}/>
                       <Text style={{textAlign: 'center'}}>Day {i+1} - {p.route}</Text>
                     </View>
                 </TouchableOpacity>
@@ -63,15 +63,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  }
 });
