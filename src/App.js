@@ -7,6 +7,6 @@ export default StackNavigator({
   Calculator: { screen: Calculator }
 }, {
   headerMode: 'none',
-  initialRouteName: 'Calculator'
+  // initialRouteName: 'Calculator'
 });
 
