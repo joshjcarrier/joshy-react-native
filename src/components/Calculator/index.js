@@ -20,7 +20,7 @@ Calculator = class Calculator extends Component<{}> {
       <View style={styles.container}>
         <View style={{ flex: 2, justifyContent: 'flex-end', padding: 8 }}>
           <Text selectable={true} numberOfLines={1} style={{ color: 'white', fontSize: 54, textAlign: 'right'}}>
-            {this.props.text}
+            {this.props.display}
           </Text>
         </View>       
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -34,70 +34,75 @@ Calculator = class Calculator extends Component<{}> {
           <TouchableOpacity activeOpacity={1} style={styles.commandButton}>
             <Text style={styles.digitText}>%</Text>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1} style={styles.operatorButton}>
+          <TouchableOpacity activeOpacity={1} style={styles.operatorButton}
+            onPress={() => this.props.onMathOpPress('⁒')}>
             <Text style={styles.digitText}>⁒</Text>
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this.props.onDigitPress(7)}>
+            onPress={() => this.props.onNonZeroDigitPress(7)}>
               <Text style={styles.digitText}>7</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this.props.onDigitPress(8)}>
+            onPress={() => this.props.onNonZeroDigitPress(8)}>
             <Text style={styles.digitText}>8</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this.props.onDigitPress(9)}>
+            onPress={() => this.props.onNonZeroDigitPress(9)}>
             <Text style={styles.digitText}>9</Text>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1} style={styles.operatorButton}>
+          <TouchableOpacity activeOpacity={1} style={styles.operatorButton}
+            onPress={() => this.props.onMathOpPress('x')}>
             <Text style={styles.digitText}>x</Text>
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this.props.onDigitPress(4)}>
+            onPress={() => this.props.onNonZeroDigitPress(4)}>
               <Text style={styles.digitText}>4</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this.props.onDigitPress(5)}>
+            onPress={() => this.props.onNonZeroDigitPress(5)}>
             <Text style={styles.digitText}>5</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this.props.onDigitPress(6)}>
+            onPress={() => this.props.onNonZeroDigitPress(6)}>
             <Text style={styles.digitText}>6</Text>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1} style={styles.operatorButton}>
+          <TouchableOpacity activeOpacity={1} style={styles.operatorButton}
+            onPress={() => this.props.onMathOpPress('-')}>
             <Text style={styles.digitText}>-</Text>
           </TouchableOpacity>
         </View> 
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this.props.onDigitPress(1)}>
+            onPress={() => this.props.onNonZeroDigitPress(1)}>
               <Text style={styles.digitText}>1</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this.props.onDigitPress(2)}>
+            onPress={() => this.props.onNonZeroDigitPress(2)}>
             <Text style={styles.digitText}>2</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this.props.onDigitPress(3)}>
+            onPress={() => this.props.onNonZeroDigitPress(3)}>
             <Text style={styles.digitText}>3</Text>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1} style={styles.operatorButton}>
+          <TouchableOpacity activeOpacity={1} style={styles.operatorButton}
+            onPress={() => this.props.onMathOpPress('+')}>
             <Text style={styles.digitText}>+</Text>
           </TouchableOpacity>
         </View>    
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity activeOpacity={1} style={styles.doubleDigitButton}
-            onPress={() => this.props.onDigitPress(0)}>
+            onPress={() => this.props.onZeroDigitPress()}>
               <Text style={styles.doubleDigitText}>0</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}>
             <Text style={styles.digitText}>.</Text>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1} style={styles.operatorButton}>
+          <TouchableOpacity activeOpacity={1} style={styles.operatorButton}
+            onPress={() => this.props.onEqualsOpPress()}>
             <Text style={styles.digitText}>=</Text>
           </TouchableOpacity>
         </View>     
@@ -161,12 +166,29 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
-function appendDigit(digit) {
+function zeroDigit() {
   return {
-    type: 'APPEND_DIGIT',
+    type: 'ZERO_DIGIT'
+  }
+}
+
+function nonZeroDigit(digit) {
+  return {
+    type: 'NON_ZERO_DIGIT',
     digit
+  }
+}
+
+function mathOp(operator) {
+  return {
+    type: 'MATH_OP',
+    operator
+  }
+}
+
+function equalsOp() {
+  return {
+    type: 'EQUALS_OP'
   }
 }
 
@@ -180,39 +202,171 @@ function clear() {
 // * Mutate its arguments;
 // * Perform side effects like API calls and routing transitions;
 // * Call non-pure functions, e.g. Date.now() or Math.random().
-calculatorReducer = function (state = { text: '0' }, action) {
+calculatorReducer = function (state = { state: 'ZERO', accumulator: 0, buffer: 0 }, action) {
+  console.log(state);
   console.log(action);
-  switch(action.type) {
-    case 'APPEND_DIGIT':
-      const d = action.digit;
-      let val = parseInt(state.text.replace(/,/g, ''));
-      val *= 10;
-      val += d;
 
-      if (val > 999999999) {
-        return state;
-      }
-
-      return { text: val.toLocaleString() };
-    break;
-    case 'CLEAR':
-     return { text: '0' };
+  if (action.type == 'CLEAR') {
+    return { state: 'ZERO', accumulator: 0, buffer: 0 }
   }
-  return state
+
+  switch(state.state) {
+    case 'ZERO':
+      switch (action.type) {
+        case 'MATH_OP':
+          return state;
+        case 'NON_ZERO_DIGIT':
+          return {
+            ...state,
+            state: 'ACCUMULATE_DIGITS',
+            buffer: action.digit
+          }
+      }
+    case 'ACCUMULATE_DIGITS':
+      switch (action.type) {
+        case 'EQUALS_OP':
+          let val = state.accumulator;
+          switch (state.pendingOp) {
+            case '⁒':
+              val /= state.buffer;
+              break;
+            case 'x':
+              val *= state.buffer;
+              break;
+            case '-':
+              val -= state.buffer;
+              break;
+            case '+':
+              val += state.buffer;
+              break;
+          }
+          return {
+            ...state,
+            state: 'COMPUTE',
+            accumulator: val,
+          }
+        case 'MATH_OP':
+          let val2 = state.accumulator;
+          switch (state.pendingOp) {
+            case '⁒':
+              val2 /= state.buffer;
+              break;
+            case 'x':
+              val2 *= state.buffer;
+              break;
+            case '-':
+              val2 -= state.buffer;
+              break;
+            case '+':
+              val2 += state.buffer;
+              break;
+            default:
+              val2 = state.buffer;
+              break;
+          }
+          return {
+            ...state,
+            state: 'COMPUTE',
+            accumulator: val2,
+            buffer: val2,
+            pendingOp: action.operator,
+          }
+        case 'ZERO_DIGIT':
+          return {
+            ...state,
+            state: 'ACCUMULATE_DIGITS',
+            buffer: (state.buffer * 10)
+          }
+        case 'NON_ZERO_DIGIT':
+          return {
+            ...state,
+            state: 'ACCUMULATE_DIGITS',
+            buffer: (state.buffer * 10) + action.digit
+          }
+      }
+    case 'COMPUTE':
+      switch (action.type) {
+        case 'EQUALS_OP':
+          let val = state.accumulator;
+          switch (state.pendingOp) {
+            case '⁒':
+              val /= state.buffer;
+              break;
+            case 'x':
+              val *= state.buffer;
+              break;
+            case '-':
+              val -= state.buffer;
+              break;
+            case '+':
+              val += state.buffer;
+              break;
+          }
+          return {
+            ...state,
+            state: 'COMPUTE',
+            accumulator: val,
+          }
+        case 'MATH_OP':
+          return {
+            ...state,
+            state: 'ZERO',
+            pendingOp: action.operator,
+          }
+        case 'NON_ZERO_DIGIT':
+          return {
+            ...state,
+            state: 'ACCUMULATE_DIGITS',
+            accumulator: state.buffer,
+            buffer: action.digit
+          }
+        case 'ZERO_DIGIT':
+          return {
+            ...state,
+            state: 'ZERO',
+            accumulator: state.buffer,
+            buffer: 0
+          }
+      }
+    case 'ERROR':
+    return state;
+  }
 }
 
 // redux store state to immutable component props
 const mapStateToProps = state => {
-  return {
-    text: state.text
+  switch(state.state) {
+    case 'ZERO':
+    case 'ACCUMULATE_DIGITS':
+    case 'ACCUMULATE_DIGITS_WITH_DECIMAL':    
+      return {
+        display: state.buffer.toLocaleString()
+      }
+    case 'COMPUTE':    
+      return {
+        display: state.accumulator.toLocaleString()
+      }
+    case 'ERROR':
+      return {
+        display: 'Error'
+      }
   }
 }
 
 // dependency inversion to trigger actions
 const mapDispatchToProps = dispatch => {
   return {
-    onDigitPress: digit => {
-      dispatch(appendDigit(digit));
+    onZeroDigitPress: () => {
+      dispatch(zeroDigit());
+    },
+    onNonZeroDigitPress: digit => {
+      dispatch(nonZeroDigit(digit));
+    },
+    onMathOpPress: operator => {
+      dispatch(mathOp(operator));
+    },
+    onEqualsOpPress: () => {
+      dispatch(equalsOp());
     },
     onClearPress: () => {
       dispatch(clear());
