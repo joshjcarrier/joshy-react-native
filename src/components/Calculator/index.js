@@ -11,42 +11,21 @@ import {
   View,
   TouchableHighlight
 } from 'react-native';
+import { connect, Provider } from 'react-redux';
+import { createStore } from 'redux';
 
-
-export default class Calculator extends Component<{}> {
-  constructor(props) {
-    super(props);
-    this.state = {text: '0'};
-  }
-
-  _appendDigit(d) {
-    let val = parseInt(this.state.text.replace(/,/g, ''));
-    val *= 10;
-    val += d;
-
-    if (val > 999999999) {
-      return;
-    }
-
-    this.setState({ text: val.toLocaleString() })
-  }
-
-  _clearDigits() {
-    this.setState({ text: '0' });
-  }
-
+Calculator = class Calculator extends Component<{}> {
   render() {
-
     return (
       <View style={styles.container}>
         <View style={{ flex: 2, justifyContent: 'flex-end', padding: 8 }}>
           <Text selectable={true} numberOfLines={1} style={{ color: 'white', fontSize: 54, textAlign: 'right'}}>
-            {this.state.text}
+            {this.props.text}
           </Text>
         </View>       
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity activeOpacity={1} style={styles.commandButton}
-            onPress={() => this._clearDigits()}>
+            onPress={() => this.props.onClearPress()}>
               <Text style={styles.digitText}>AC</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.commandButton}>
@@ -61,15 +40,15 @@ export default class Calculator extends Component<{}> {
         </View>
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this._appendDigit(7)}>
+            onPress={() => this.props.onDigitPress(7)}>
               <Text style={styles.digitText}>7</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this._appendDigit(7)}>
+            onPress={() => this.props.onDigitPress(8)}>
             <Text style={styles.digitText}>8</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this._appendDigit(9)}>
+            onPress={() => this.props.onDigitPress(9)}>
             <Text style={styles.digitText}>9</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.operatorButton}>
@@ -78,15 +57,15 @@ export default class Calculator extends Component<{}> {
         </View>
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this._appendDigit(4)}>
+            onPress={() => this.props.onDigitPress(4)}>
               <Text style={styles.digitText}>4</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this._appendDigit(5)}>
+            onPress={() => this.props.onDigitPress(5)}>
             <Text style={styles.digitText}>5</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this._appendDigit(6)}>
+            onPress={() => this.props.onDigitPress(6)}>
             <Text style={styles.digitText}>6</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.operatorButton}>
@@ -95,15 +74,15 @@ export default class Calculator extends Component<{}> {
         </View> 
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this._appendDigit(1)}>
+            onPress={() => this.props.onDigitPress(1)}>
               <Text style={styles.digitText}>1</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this._appendDigit(2)}>
+            onPress={() => this.props.onDigitPress(2)}>
             <Text style={styles.digitText}>2</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}
-            onPress={() => this._appendDigit(3)}>
+            onPress={() => this.props.onDigitPress(3)}>
             <Text style={styles.digitText}>3</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.operatorButton}>
@@ -112,7 +91,7 @@ export default class Calculator extends Component<{}> {
         </View>    
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity activeOpacity={1} style={styles.doubleDigitButton}
-            onPress={() => this._appendDigit(0)}>
+            onPress={() => this.props.onDigitPress(0)}>
               <Text style={styles.doubleDigitText}>0</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} style={styles.digitButton}>
@@ -134,12 +113,6 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     backgroundColor: 'black',
     padding: 16,
-  },
-  buttonTouch: {
-    flex: 1,
-    justifyContent: 'center',
-    borderRadius: 100,
-    borderWidth: 4,
   },
   commandButton: {
     flex: 1,
@@ -187,3 +160,80 @@ const styles = StyleSheet.create({
     paddingLeft: 30
   },
 });
+
+
+
+function appendDigit(digit) {
+  return {
+    type: 'APPEND_DIGIT',
+    digit
+  }
+}
+
+function clear() {
+  return {
+    type: 'CLEAR'
+  }
+}
+
+// Things you should never do inside a reducer:
+// * Mutate its arguments;
+// * Perform side effects like API calls and routing transitions;
+// * Call non-pure functions, e.g. Date.now() or Math.random().
+calculatorReducer = function (state = { text: '0' }, action) {
+  console.log(action);
+  switch(action.type) {
+    case 'APPEND_DIGIT':
+      const d = action.digit;
+      let val = parseInt(state.text.replace(/,/g, ''));
+      val *= 10;
+      val += d;
+
+      if (val > 999999999) {
+        return state;
+      }
+
+      return { text: val.toLocaleString() };
+    break;
+    case 'CLEAR':
+     return { text: '0' };
+  }
+  return state
+}
+
+// redux store state to immutable component props
+const mapStateToProps = state => {
+  return {
+    text: state.text
+  }
+}
+
+// dependency inversion to trigger actions
+const mapDispatchToProps = dispatch => {
+  return {
+    onDigitPress: digit => {
+      dispatch(appendDigit(digit));
+    },
+    onClearPress: () => {
+      dispatch(clear());
+    }
+  }
+}
+
+// prep Calculator for React-Redux rendering
+store = createStore(calculatorReducer);
+Calculator = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Calculator);
+
+export default class CalculatorApp extends Component<{}> {
+  render() {
+    return (
+    <Provider store={store}>
+      <Calculator />
+    </Provider>
+    );
+  }
+};
+
