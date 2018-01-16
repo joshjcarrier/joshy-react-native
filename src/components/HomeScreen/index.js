@@ -16,13 +16,8 @@ export default class HomeScreen extends Component<{}> {
     const { navigate } = this.props.navigation;
     const projects = [
       {
-        'route': 'Profile'
-      },
-      {
-        'route': 'Profile'
-      },
-      {
-        'route': 'Profile'
+        'route': 'Calculator',
+        'screenshot': require('../Calculator/screenshot.png')
       },
     ]
 
@@ -45,11 +40,11 @@ export default class HomeScreen extends Component<{}> {
                   <TouchableOpacity key={i}
                     activeOpacity={0.8}
                     style={{width: '49%', height: 160, padding: 6, marginBottom: 8, borderColor: 'gray', borderWidth: 1}}
-                    onPress={() => navigate('Home') }>
+                    onPress={() => navigate(p.route) }>
                     <View style={{ flex: 1, flexDirection: 'column', alignItems: 'stretch', justifyContent: 'center'}}>
-                      <Image source={require('../Profile/me.jpg')}
+                      <Image source={p.screenshot}
                         style={{ height: '80%', width: '100%', marginBottom: 4}}/>
-                      <Text style={{textAlign: 'center'}}>Day {i+1}</Text>
+                      <Text style={{textAlign: 'center'}}>Day {i+1} - {p.route}</Text>
                     </View>
                 </TouchableOpacity>
                 );
