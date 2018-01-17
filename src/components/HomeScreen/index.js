@@ -18,7 +18,11 @@ export default class HomeScreen extends Component<{}> {
       {
         'route': 'Calculator',
         'screenshot': require('../Calculator/screenshot.png')
-      }
+      },
+      {
+        'route': 'CVTally',
+        'screenshot': require('../CVTally/screenshot.png')
+      },
     ];
     
     return (
