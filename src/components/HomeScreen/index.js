@@ -23,6 +23,10 @@ export default class HomeScreen extends Component<{}> {
         'route': 'CVTally',
         'screenshot': require('../CVTally/screenshot.png')
       },
+      {
+        'route': 'MLGHorn',
+        'screenshot': require('../MLGHorn/screenshot.png')
+      },
     ];
     
     return (
