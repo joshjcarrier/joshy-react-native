@@ -27,6 +27,10 @@ export default class HomeScreen extends Component<{}> {
         'route': 'MLGHorn',
         'screenshot': require('../MLGHorn/screenshot.png')
       },
+      {
+        'route': 'ClickerGame',
+        'screenshot': require('../ClickerGame/screenshot.png')
+      },
     ];
     
     return (
