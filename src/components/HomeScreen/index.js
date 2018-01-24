@@ -31,6 +31,10 @@ export default class HomeScreen extends Component<{}> {
         'route': 'ClickerGame',
         'screenshot': require('../ClickerGame/screenshot.png')
       },
+      {
+        'route': 'MultiTask',
+        'screenshot': require('../MultiTask/screenshot.png')
+      },
     ];
     
     return (
