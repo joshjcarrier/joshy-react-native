@@ -35,6 +35,10 @@ export default class HomeScreen extends Component<{}> {
         'route': 'MultiTask',
         'screenshot': require('../MultiTask/screenshot.png')
       },
+      {
+        'route': 'iGraphiQL',
+        'screenshot': require('../iGraphiQL/screenshot.png')
+      },
     ];
     
     return (
