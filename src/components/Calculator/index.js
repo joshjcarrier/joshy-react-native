@@ -375,16 +375,22 @@ const mapDispatchToProps = dispatch => {
 }
 
 // prep Calculator for React-Redux rendering
-store = createStore(calculatorReducer);
 Calculator = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Calculator);
 
 export default class CalculatorApp extends Component<{}> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      store: createStore(calculatorReducer)
+    };
+  }
+
   render() {
     return (
-    <Provider store={store}>
+    <Provider store={this.state.store}>
       <Calculator />
     </Provider>
     );

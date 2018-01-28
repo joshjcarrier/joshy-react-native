@@ -277,16 +277,22 @@ const mapClickerDispatchToProps = dispatch => {
   }
 }
 
-clickerGameStore = createStore(clickerGameReducer);
 ClickerGame = connect(
   mapClickerStateToProps,
   mapClickerDispatchToProps,
 )(ClickerGame);
 
 export default class ClickerGameApp extends Component<{}> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      store: createStore(clickerGameReducer)
+    };
+  }
+
   render() {
     return (
-    <Provider store={clickerGameStore}>
+    <Provider store={this.state.store}>
       <ClickerGame />
     </Provider>
     );
