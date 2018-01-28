@@ -6,6 +6,7 @@ import CVTally from './components/CVTally';
 import MLGHorn from './components/MLGHorn';
 import MultiTask from './components/MultiTask';
 import iGraphiQL from './components/iGraphiQL';
+import TwentyOneDayFix from './components/TwentyOneDayFix';
 
 export default StackNavigator({
   Home: { screen: HomeScreen },
@@ -15,8 +16,9 @@ export default StackNavigator({
   ClickerGame: { screen: ClickerGame },
   MultiTask: { screen: MultiTask },
   iGraphiQL: { screen: iGraphiQL },
+  TwentyOneDayFix: { screen: TwentyOneDayFix },
 }, {
   headerMode: 'none',
-  // initialRouteName: 'iGraphiQL'
+  // initialRouteName: 'TwentyOneDayFix'
 });
 

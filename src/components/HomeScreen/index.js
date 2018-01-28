@@ -39,6 +39,10 @@ export default class HomeScreen extends Component<{}> {
         'route': 'iGraphiQL',
         'screenshot': require('../iGraphiQL/screenshot.png')
       },
+      {
+        'route': 'TwentyOneDayFix',
+        'screenshot': require('../TwentyOneDayFix/screenshot.png')
+      },
     ];
     
     return (
