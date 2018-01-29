@@ -4,15 +4,23 @@
 
 ## Getting Started
 
+From the top-level project directory:
+
 ```sh
 brew install node
 brew install watchman
+brew install cocoapods
 npm install -g react-native-cli
 npm install
+cd ios
+pod install
+cd ..
 react-native run-ios
 ```
 
 Or, see [React Native: Getting Started](https://facebook.github.io/react-native/docs/0.52/getting-started.html).
+
+Deploy to your phone by opening `ios/joshy.xcworkspace` with XCode.
 
 ## Days
 
@@ -30,7 +38,7 @@ Or, see [React Native: Getting Started](https://facebook.github.io/react-native/
 
 ### Day 4: Microservices Clicker Game
 
-![joshy_clickergame](https://user-images.githubusercontent.com/526858/35479483-aba6942e-03ad-11e8-9b02-aca32a311e91.gif)
+![joshy_clickergame](https://user-images.githubusercontent.com/526858/35494171-98f9dc62-046d-11e8-91c1-02bb342fd553.gif)
 
 ### Day 5: Split-pane Web Multitasking
 
@@ -38,8 +46,12 @@ Or, see [React Native: Getting Started](https://facebook.github.io/react-native/
 
 ### Day 6: GraphQL Schema Documentation Viewer
 
-![joshy_igraphiql](https://user-images.githubusercontent.com/526858/35479486-b1f95aaa-03ad-11e8-8507-9d1b6c2c25f2.gif)
+![joshy_igraphiql](https://user-images.githubusercontent.com/526858/35494172-990b2e18-046d-11e8-99f0-341a05efb6ee.gif)
 
 ### Day 7: 21 Day Fix Workout Schedule Tracker
 
 ![joshy_twentyonedayfix](https://user-images.githubusercontent.com/526858/35479491-bc610f42-03ad-11e8-956b-cc471c13b728.gif)
+
+### Day 8: Treasure Dig Map
+
+![joshy_treasuremap](https://user-images.githubusercontent.com/526858/35494173-9920dfe2-046d-11e8-91ac-138be8b2b8ed.gif)

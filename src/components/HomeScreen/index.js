@@ -43,6 +43,10 @@ export default class HomeScreen extends Component<{}> {
         'route': 'TwentyOneDayFix',
         'screenshot': require('../TwentyOneDayFix/screenshot.png')
       },
+      {
+        'route': 'TreasureMap',
+        'screenshot': require('../TreasureMap/screenshot.png')
+      },
     ];
     
     return (
