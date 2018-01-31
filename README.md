@@ -55,3 +55,7 @@ Deploy to your phone by opening `ios/joshy.xcworkspace` with XCode.
 ### Day 8: Treasure Dig Map
 
 ![joshy_treasuremap](https://user-images.githubusercontent.com/526858/35494173-9920dfe2-046d-11e8-91ac-138be8b2b8ed.gif)
+
+### Day 9: Smoothie Blender
+
+![joshy_smoothie](https://user-images.githubusercontent.com/526858/35610768-79f55cb4-0617-11e8-93d5-f9b5762e5f78.gif)

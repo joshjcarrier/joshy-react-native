@@ -47,6 +47,10 @@ export default class HomeScreen extends Component<{}> {
         'route': 'TreasureMap',
         'screenshot': require('../TreasureMap/screenshot.png')
       },
+      {
+        'route': 'Smoothie',
+        'screenshot': require('../Smoothie/screenshot.png')
+      },
     ];
     
     return (

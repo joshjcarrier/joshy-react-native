@@ -8,6 +8,7 @@ import MultiTask from './components/MultiTask';
 import iGraphiQL from './components/iGraphiQL';
 import TwentyOneDayFix from './components/TwentyOneDayFix';
 import TreasureMap from './components/TreasureMap';
+import Smoothie from './components/Smoothie';
 
 export default StackNavigator({
   Home: { screen: HomeScreen },
@@ -19,8 +20,9 @@ export default StackNavigator({
   iGraphiQL: { screen: iGraphiQL },
   TwentyOneDayFix: { screen: TwentyOneDayFix },
   TreasureMap: { screen: TreasureMap },
+  Smoothie: { screen: Smoothie },
 }, {
   headerMode: 'none',
-  // initialRouteName: 'TreasureMap'
+  // initialRouteName: 'Smoothie'
 });
 
